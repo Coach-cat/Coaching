@@ -120,7 +120,7 @@
   /* ---------- ABOUT ---------- */
   .about{background:var(--paper)}
   .about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:clamp(40px,6vw,84px);align-items:start}
-  .portrait{position:relative}
+  .portrait{position:relative;width:75%;margin:0 auto}
   .portrait-frame{position:relative;border-radius:200px 200px 14px 14px;overflow:hidden;box-shadow:var(--shadow);background:var(--cream-deep)}
   .portrait-frame img{width:100%;aspect-ratio:1/1;object-fit:cover}
   .portrait::after{content:"";position:absolute;inset:14px;border:1px solid var(--terra-tint);border-radius:190px 190px 8px 8px;pointer-events:none;z-index:3}
@@ -142,15 +142,69 @@
   .pillar{
     background:var(--paper);border:1px solid var(--line);border-radius:18px;
     padding:38px 32px;transition:transform .4s cubic-bezier(.2,.8,.3,1),box-shadow .4s,border-color .4s;
-    position:relative;overflow:hidden;
+    position:relative;overflow:hidden;cursor:pointer;text-align:left;
+    font-family:inherit;color:inherit;width:100%;display:block;
   }
   .pillar::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--terra);transform:scaleX(0);transform-origin:left;transition:transform .45s ease}
-  .pillar:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:transparent}
-  .pillar:hover::before{transform:scaleX(1)}
-  .pillar .ic{width:50px;height:50px;border-radius:13px;background:var(--cream-deep);display:grid;place-items:center;margin-bottom:24px;color:var(--terra-deep)}
+  .pillar:hover,.pillar:focus-visible{transform:translateY(-6px);box-shadow:var(--shadow);border-color:transparent;outline:none}
+  .pillar:hover::before,.pillar:focus-visible::before{transform:scaleX(1)}
+  .pillar .ic{width:50px;height:50px;border-radius:13px;background:var(--cream-deep);display:grid;place-items:center;margin-bottom:24px;color:var(--terra-deep);transition:background .35s,color .35s}
+  .pillar:hover .ic,.pillar:focus-visible .ic{background:var(--terra);color:#fff}
   .pillar .ic svg{width:24px;height:24px;stroke-width:1.6}
   .pillar h3{font-family:var(--serif);font-weight:500;font-size:1.42rem;margin-bottom:12px;letter-spacing:-.01em}
   .pillar p{color:var(--ink-soft);font-size:.96rem}
+  .pillar .more{
+    display:inline-flex;align-items:center;gap:7px;margin-top:22px;
+    font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--terra-deep);
+  }
+  .pillar .more svg{width:16px;height:16px;transition:transform .35s cubic-bezier(.2,.8,.3,1)}
+  .pillar:hover .more svg,.pillar:focus-visible .more svg{transform:translateX(5px)}
+
+  /* ---------- MODAL ---------- */
+  .modal-scrim{
+    position:fixed;inset:0;z-index:100;display:flex;align-items:flex-start;justify-content:center;
+    padding:max(24px,4vh) 18px;overflow-y:auto;
+    background:rgba(34,28,20,.5);backdrop-filter:blur(7px);
+    opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s;
+  }
+  .modal-scrim.open{opacity:1;visibility:visible}
+  .modal{
+    background:var(--paper);border-radius:24px;max-width:680px;width:100%;
+    margin:auto;position:relative;box-shadow:0 40px 90px -30px rgba(40,25,10,.6);
+    padding:clamp(30px,5vw,58px);
+    transform:translateY(26px) scale(.98);opacity:0;transition:transform .42s cubic-bezier(.2,.8,.3,1),opacity .42s;
+    border-top:4px solid var(--terra);
+  }
+  .modal-scrim.open .modal{transform:none;opacity:1}
+  .modal-close{
+    position:sticky;top:0;float:right;margin:-8px -8px 0 0;
+    width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+    background:var(--cream);color:var(--ink);cursor:pointer;display:grid;place-items:center;
+    transition:background .25s,transform .25s;z-index:2;
+  }
+  .modal-close:hover{background:var(--terra);color:#fff;transform:rotate(90deg)}
+  .modal-close svg{width:18px;height:18px}
+  .modal .eyebrow{margin-bottom:18px}
+  .modal h3.m-title{font-family:var(--serif);font-weight:400;font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1.12;letter-spacing:-.01em;margin-bottom:22px;color:var(--ink)}
+  .modal h3.m-title em{font-style:italic;color:var(--terra)}
+  .modal h4{font-family:var(--serif);font-weight:500;font-size:1.25rem;margin:30px 0 12px;color:var(--ink)}
+  .modal p{color:var(--ink-soft);margin-bottom:16px;font-size:1rem}
+  .modal p strong{color:var(--ink)}
+  .modal .m-pull{
+    font-family:var(--serif);font-style:italic;font-size:clamp(1.25rem,2.4vw,1.6rem);line-height:1.35;
+    color:var(--terra-deep);margin:26px 0;padding-left:22px;border-left:3px solid var(--terra);
+  }
+  .modal .m-q{
+    background:var(--cream-deep);border-radius:14px;padding:18px 22px;margin:18px 0;
+    font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--ink);text-align:center;
+  }
+  .check-list{list-style:none;margin:6px 0 22px}
+  .check-list li{display:flex;gap:13px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);color:var(--ink);font-size:.98rem}
+  .check-list li:last-child{border-bottom:none}
+  .check-list svg{flex:none;width:18px;height:18px;margin-top:4px;color:var(--terra)}
+  .modal-cta{display:flex;flex-wrap:wrap;gap:13px;margin-top:30px;padding-top:28px;border-top:1px solid var(--line)}
+  .modal .note{font-size:.86rem;color:var(--sage);font-style:italic;margin-top:14px}
+  body.modal-open{overflow:hidden}
 
   /* services list */
   .svc-list-wrap{margin-top:56px;background:var(--ink);border-radius:22px;padding:clamp(34px,5vw,56px);color:var(--cream);box-shadow:var(--shadow)}
@@ -241,7 +295,7 @@
   @media(max-width:920px){
     .about-grid,.approach-grid{grid-template-columns:1fr}
     .pillars{grid-template-columns:1fr}
-    .portrait{max-width:380px;margin:0 auto}
+    .portrait{max-width:285px;margin:0 auto}
   }
   @media(max-width:760px){
     .navlinks{
@@ -339,27 +393,30 @@
     </div>
 
     <div class="pillars stagger">
-      <div class="pillar">
+      <button class="pillar" data-modal="m-coaching" aria-haspopup="dialog">
         <div class="ic" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 0 0-4 4c0 1.5.8 2.8 2 3.5V12h4v-1.5c1.2-.7 2-2 2-3.5a4 4 0 0 0-4-4Z"/><path d="M10 16h4M10 19h4"/></svg>
         </div>
         <h3>Coaching &amp; Confidence</h3>
         <p>Performance coaching that helps you recognize your strongest accomplishments, rebuild professional confidence, and communicate your experience with clarity and conviction.</p>
-      </div>
-      <div class="pillar">
+        <span class="more">Read more<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+      <button class="pillar" data-modal="m-writing" aria-haspopup="dialog">
         <div class="ic" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 3.5 20.5 8.5 8 21H3v-5L15.5 3.5Z"/><path d="M13.5 5.5 18.5 10.5"/></svg>
         </div>
         <h3>Strategic Career Writing</h3>
         <p>Resumes, cover letters, executive bios, one-pagers, and LinkedIn profiles — written from scratch and tailored to your goals, never pulled from a generic template.</p>
-      </div>
-      <div class="pillar">
+        <span class="more">Read more<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+      <button class="pillar" data-modal="m-positioning" aria-haspopup="dialog">
         <div class="ic" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18" opacity=".5"/><path d="M12 8l1.6 3.2L17 12l-2.5 2 0.7 3.4L12 16l-3.2 1.4.7-3.4L7 12l3.4-.8L12 8Z"/></svg>
         </div>
         <h3>Positioning &amp; Interview Prep</h3>
         <p>Personal branding, interview preparation, recruiter and networking communication, and career-transition messaging that positions you for the role you actually want.</p>
-      </div>
+        <span class="more">Read more<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
     </div>
 
     <div class="svc-list-wrap reveal">
@@ -473,6 +530,86 @@
   </div>
 </footer>
 
+<!-- ===================== MODALS ===================== -->
+
+<!-- Coaching & Confidence -->
+<div class="modal-scrim" id="m-coaching" role="dialog" aria-modal="true" aria-labelledby="m-coaching-t">
+  <div class="modal">
+    <button class="modal-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <span class="eyebrow">Coaching &amp; Confidence</span>
+    <h3 class="m-title" id="m-coaching-t">Coaching, Performance &amp; the <em>Pursuit of Excellence</em></h3>
+    <p>Long before I became a career coach, resume writer, and interview strategist, I was a high-performance athlete and coach.</p>
+    <p>Over the years, I coached athletes in alpine ski racing, track and field, endurance sports, and Ironman triathlon. I also competed at the highest levels of endurance sport, representing my country at World Championship events across four different distances — from Olympic-distance triathlon to the Ironman World Championship in Kona, Hawaii.</p>
+    <p>Through both coaching and competition, I learned something that applies just as much to careers as it does to sports:</p>
+    <p class="m-pull">Performance is performance.</p>
+    <p>Whether you're standing on a start line, presenting to senior leadership, interviewing for a dream job, or navigating a challenging search, the same principles apply. Success requires preparation. It requires consistency. It requires the ability to perform under pressure. And it requires believing in yourself — especially on the days when confidence feels hard to find.</p>
+    <p>Athletes quickly learn that progress is rarely linear. There are great training days and difficult ones, personal bests and setbacks, moments when motivation is high and moments when it disappears completely. The same is true during a job search. Some days bring interview requests; others bring silence. The candidates who ultimately succeed are not always the most talented — they're often the ones who keep showing up, refining their approach, and moving forward when others quit.</p>
+    <p>One of the most important lessons I learned, as both an athlete and a coach, is that <strong>mindset matters.</strong> If you begin a race convinced you'll fail, you've already placed a ceiling on your performance. The same is true in your career. You must walk into an interview believing you belong in the room, communicate your value with confidence, and trust your preparation when the opportunity arrives.</p>
+    <p>My role as a coach isn't simply to help you write a stronger resume or prepare better interview answers. It's to help you build the confidence, clarity, and mindset to perform at your best when it matters most.</p>
+    <p class="m-pull">When preparation meets belief, remarkable things become possible.</p>
+    <p>And when you consistently show up, do the work, and trust the process — success often follows.</p>
+    <div class="modal-cta">
+      <a href="mailto:coachcatherine.m@gmail.com?subject=Performance%20Coaching%20Inquiry" class="btn">Start a Conversation</a>
+    </div>
+  </div>
+</div>
+
+<!-- Strategic Career Writing -->
+<div class="modal-scrim" id="m-writing" role="dialog" aria-modal="true" aria-labelledby="m-writing-t">
+  <div class="modal">
+    <button class="modal-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <span class="eyebrow">Strategic Career Writing</span>
+    <h3 class="m-title" id="m-writing-t">Is Your Resume <em>Ready?</em></h3>
+    <p>Your resume is one of the most important marketing documents of your career. A recruiter may spend 5–30 seconds reviewing it. An ATS or AI screening tool may spend less than a second. The question is simple: <strong>is your resume making the right impression?</strong></p>
+    <p>It should clearly demonstrate that you have the skills, experience, and achievements the role requires — and quickly answer the question every hiring manager is asking:</p>
+    <p class="m-q">"Why should I spend time interviewing this person?"</p>
+    <p>Does your resume showcase your accomplishments, or simply list responsibilities and duties? Is it easy to read, or are there dense paragraphs and inconsistent formatting that make recruiters work harder than they should? Have you packed in every role you've ever held — including the mall-kiosk "Manager" title from 20 years ago? Do certain words appear so often they lose all meaning? (If "increased sales," "team player," or "strategic leader" show up every few lines, you may have a case of résumé déjà vu.)</p>
+    <p>Today's AI and ATS systems are increasingly sophisticated. They identify repetition, vague language, inconsistencies, missing context, and formatting issues faster than ever — and they recognize when a resume lacks focus, clarity, or relevance to the target role.</p>
+    <p>The reality is that resume expectations have changed. Fancy graphics and complicated layouts may look impressive, but if they confuse recruiters or ATS systems, they work against you. You can still present yourself professionally with a clean, modern design — and save the deeper career stories, personality, and executive summaries for interviews and networking conversations.</p>
+    <h4>Ask yourself these questions</h4>
+    <ul class="check-list">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Would my resume perform well in an ATS screening?</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Does every bullet point demonstrate action, impact, and value?</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Is the content results-focused rather than task-focused?</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Is the document easy to scan in 10 seconds?</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Have I removed unnecessary repetition, buzzwords, and filler?</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Are there gaps or unclear transitions that might raise questions?</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Does this resume clearly differentiate me from other candidates?</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Would a recruiter remember me after reviewing dozens of similar resumes?</li>
+    </ul>
+    <p class="m-q">Most importantly: does this resume make someone want to call me?</p>
+    <p>If you're not sure, or you'd like an objective review, I'd be happy to help.</p>
+    <div class="modal-cta">
+      <a href="mailto:coachcatherine.m@gmail.com?subject=Complimentary%20Resume%20Evaluation" class="btn">Request a Complimentary Resume Evaluation</a>
+    </div>
+  </div>
+</div>
+
+<!-- Positioning & Interview Prep -->
+<div class="modal-scrim" id="m-positioning" role="dialog" aria-modal="true" aria-labelledby="m-positioning-t">
+  <div class="modal">
+    <button class="modal-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <span class="eyebrow">Positioning &amp; Interview Prep</span>
+    <h3 class="m-title" id="m-positioning-t">Standing Out for the <em>Right Reasons</em></h3>
+    <p>Two candidates can have nearly identical experience and get completely different results. The difference is usually positioning — how clearly and confidently you communicate the value you bring.</p>
+    <p>Most professionals undersell themselves. They list what they did instead of what it meant, blend in instead of standing out, and walk into interviews hoping the right words will come to them in the moment. I help you take control of that narrative.</p>
+    <p>Together, we'll clarify your <strong>personal brand</strong> — the consistent, authentic message that runs through your resume, LinkedIn, networking conversations, and interviews. We'll identify the strengths and accomplishments that set you apart, and frame them in language that resonates with the people making hiring decisions.</p>
+    <p>When it comes to <strong>interviews</strong>, preparation changes everything. We'll work through the questions you're most likely to face, develop clear and compelling stories that demonstrate your impact, and practice delivering them with confidence — so you walk in knowing you belong in the room.</p>
+    <p>And because so many opportunities come through people, I'll help you communicate effectively with recruiters and your network, and craft messaging that makes sense of career transitions rather than leaving them open to question.</p>
+    <p class="m-pull">The goal is simple: to make sure the right people understand exactly why they should choose you.</p>
+    <p>Let's make sure you're positioned to win the opportunities you actually want.</p>
+    <div class="modal-cta">
+      <a href="mailto:coachcatherine.m@gmail.com?subject=Positioning%20%26%20Interview%20Prep%20Inquiry" class="btn">Let's Talk Strategy</a>
+    </div>
+  </div>
+</div>
+
 <script>
   // sticky header
   const header=document.getElementById('header');
@@ -502,6 +639,36 @@
 
   // year
   document.getElementById('yr').textContent=new Date().getFullYear();
+
+  // service modals
+  let lastFocused=null;
+  const openModal=(id)=>{
+    const m=document.getElementById(id);if(!m)return;
+    lastFocused=document.activeElement;
+    m.classList.add('open');
+    document.body.classList.add('modal-open');
+    m.querySelector('.modal-close').focus();
+  };
+  const closeModal=(m)=>{
+    m.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    if(lastFocused)lastFocused.focus();
+  };
+  document.querySelectorAll('.pillar[data-modal]').forEach(card=>{
+    card.addEventListener('click',()=>openModal(card.dataset.modal));
+  });
+  document.querySelectorAll('.modal-scrim').forEach(scrim=>{
+    scrim.querySelector('.modal-close').addEventListener('click',()=>closeModal(scrim));
+    scrim.addEventListener('click',e=>{if(e.target===scrim)closeModal(scrim);});
+    // close mailto links should also dismiss
+    scrim.querySelectorAll('.modal-cta a').forEach(a=>a.addEventListener('click',()=>closeModal(scrim)));
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){
+      const open=document.querySelector('.modal-scrim.open');
+      if(open)closeModal(open);
+    }
+  });
 </script>
 </body>
 </html>
