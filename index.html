@@ -141,18 +141,18 @@
   /* ---------- ABOUT ---------- */
   .about{background:var(--paper)}
   .about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:clamp(40px,6vw,84px);align-items:start}
-  .portrait{position:relative;width:67.5%;margin:0 auto}
+  .portrait{position:relative;width:81%;margin:0 auto;text-align:center}
   .portrait-frame{position:relative;border-radius:20px;overflow:hidden;box-shadow:var(--shadow);background:var(--cream-deep)}
   .portrait-frame img{width:100%;height:auto;display:block}
-  .portrait::after{content:"";position:absolute;inset:10px;border:1px solid var(--terra-tint);border-radius:13px;pointer-events:none;z-index:3}
+  .portrait-frame::after{content:"";position:absolute;inset:10px;border:1px solid var(--terra-tint);border-radius:13px;pointer-events:none;z-index:3}
   .portrait-badge{
-    position:absolute;bottom:24px;right:-14px;z-index:4;
+    display:inline-flex;align-items:center;gap:13px;margin-top:20px;
     background:var(--ink);color:var(--cream);
-    padding:16px 22px;border-radius:14px;box-shadow:var(--shadow-sm);
-    font-family:var(--serif);text-align:center;line-height:1;
+    padding:13px 26px;border-radius:50px;box-shadow:var(--shadow-sm);
+    font-family:var(--serif);line-height:1;
   }
-  .portrait-badge b{font-size:1.9rem;font-weight:500;display:block}
-  .portrait-badge small{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;font-family:var(--sans);color:var(--terra-tint);font-weight:600}
+  .portrait-badge b{font-size:1.6rem;font-weight:500}
+  .portrait-badge small{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;font-family:var(--sans);color:var(--terra-tint);font-weight:600;padding-left:13px;border-left:1px solid rgba(232,201,178,.35)}
   .about-body p{margin-bottom:20px;color:var(--ink-soft)}
   .about-body p.intro{font-family:var(--serif);font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.4;color:var(--ink);font-weight:400}
   .about-body p.intro em{font-style:italic;color:var(--terra)}
@@ -317,7 +317,7 @@
   @media(max-width:920px){
     .about-grid,.approach-grid{grid-template-columns:1fr}
     .pillars{grid-template-columns:1fr}
-    .portrait{max-width:257px;margin:0 auto}
+    .portrait{max-width:308px;margin:0 auto}
   }
   @media(max-width:760px){
     .navlinks{
